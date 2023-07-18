@@ -1,0 +1,16 @@
+--- # Elasticsearch
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: quickstart
+spec:
+  version: 8.8.2
+  nodeSets:
+  - name: master
+    count: 2
+    config:
+      node.roles: ["master"]
+  - name: ingest-data
+    count: 2
+    config:
+      node.roles: ["data", "ingest"]
