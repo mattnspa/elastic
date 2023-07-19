@@ -20,7 +20,8 @@ kubectl apply -f https://download.elastic.co/downloads/eck/2.8.0/operator.yaml
 ```
 ## Deploy Elasticsearch cluster
 
-may need to increase vm.max_map_count
+In production you may need to increase vm.max_map_count. 
+In dev set `config.node.store.allow_mmap: false` - [k8s virtual memory](https://elastic.co/guide/en/cloud-on-k8s/2.8/k8s-virtual-memory.html)
 ```bash
 sudo sysctl -w vm.max_map_count=262144
 ```
