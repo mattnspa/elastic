@@ -31,9 +31,9 @@ kubectl apply -f elasticsearch.yaml
 in a new terminal, add port forwarding:
 ```bash
 # To bind it to all interfaces (accessible from other hosts):
-kubectl port-forward --address 0.0.0.0 service/quickstart-es-ingest-data <exposed port>:9200
+kubectl port-forward --address 0.0.0.0 service/quickstart-es-client <exposed port>:9200
 # To expose it internally (localhost):
-kubectl port-forward service/quickstart-es-ingest-data <exposed port>:9200
+kubectl port-forward service/quickstart-es-client <exposed port>:9200
 ```
 
 ## Deploy Kibana

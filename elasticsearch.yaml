@@ -7,10 +7,14 @@ spec:
   version: 8.8.2
   nodeSets:
   - name: master
-    count: 2
+    count: 1
     config:
       node.roles: ["master"]
-  - name: ingest-data
-    count: 2
+  - name: data
+    count: 1
     config:
-      node.roles: ["data", "ingest"]
+      node.roles: ["data"]
+  - name: client
+    count: 1
+    config:
+      node.roles: []
