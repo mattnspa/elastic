@@ -1,0 +1,15 @@
+--- # Kibana
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: {{ include "elastic.fullname" . }}
+spec:
+  version: {{ .Values.elastic.version}}
+  count: {{ .Values.kibana.count }}
+  elasticsearchRef:
+    name: {{ include "elastic.fullname" . }}
+  config:
+    monitoring:
+      ui:
+        ccs:
+          enabled: false

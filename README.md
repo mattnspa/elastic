@@ -3,6 +3,7 @@ Install:
 - docker
 - minikube
 - kubectl
+- helm
 
 ```bash
 # Set minikube to use docker driver
@@ -12,42 +13,16 @@ minikube start start --cpus 4 --memory 8192
 ```
 
 
-## Deploy the ECK 
-```bash
-kubectl create -f https://download.elastic.co/downloads/eck/2.8.0/crds.yaml
+## Deploy the stack 
+A simple setup script [build.sh](./build.sh) can be used to deploy the stack. 
 
-kubectl apply -f https://download.elastic.co/downloads/eck/2.8.0/operator.yaml
+In a new terminal, add port forwarding:
+```bash
+kubectl port-forward service/{{ elastic client service }} 9200
+kubectl port-forward service/{{ kibana service }} 5601
 ```
-## Deploy Elasticsearch cluster
+To bind it to all interfaces (accessible from other hosts) add the following flag `--address 0.0.0.0`
 
-In production you may need to increase vm.max_map_count. 
-In dev set `config.node.store.allow_mmap: false` - [k8s virtual memory](https://elastic.co/guide/en/cloud-on-k8s/2.8/k8s-virtual-memory.html)
-```bash
-sudo sysctl -w vm.max_map_count=262144
-```
-
-```bash
-kubectl apply -f elasticsearch.yaml
-```
-in a new terminal, add port forwarding:
-```bash
-# To bind it to all interfaces (accessible from other hosts):
-kubectl port-forward --address 0.0.0.0 service/quickstart-es-client <exposed port>:9200
-# To expose it internally (localhost):
-kubectl port-forward service/quickstart-es-client <exposed port>:9200
-```
-
-## Deploy Kibana
-```bash
-kubectl apply -f kibana.yaml
-```
-in a new terminal, add port forwarding:
-```bash
-# To bind it to all interfaces (accessible from other hosts):
-kubectl port-forward --address 0.0.0.0 service/kibana-kb-http <exposed port>:5601
-# To expose it internally (localhost):
-kubectl port-forward service/kibana-kb-http <exposed port>:5601
-```
 
 ## Send messages
 ```bash

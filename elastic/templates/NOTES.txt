@@ -1,0 +1,7 @@
+Deployment complete.
+
+To see the status of the Elastic stack run:
+kubectl get elastic -n {{ .Release.Namespace }}
+
+To see the pods, run:
+kubectl get pods -n {{ .Release.Namespace }}

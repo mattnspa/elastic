@@ -1,0 +1,27 @@
+--- # Elasticsearch
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: {{ include "elastic.fullname" . }}
+spec:
+  version: {{ .Values.elastic.version}}
+  nodeSets:
+  {{- range $k, $v := .Values.elastic.nodeSets }}
+  - name: {{ $k}}
+    count: {{ $v.count }}
+    config:
+      node:
+        {{- if $v.roles }}
+        roles: {{ $v.roles | toYaml | nindent 10 }} 
+        {{- else }}
+        roles: []
+        {{- end}}
+        store:
+          allow_mmap: false
+      {{ if $.Values.elastic.audit }}
+      xpack:
+        security:
+          audit:
+            enabled: true
+      {{- end }}
+  {{- end }}

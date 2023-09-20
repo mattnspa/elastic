@@ -1,0 +1,26 @@
+
+elastic:
+  audit: true
+  nodeSets:
+    master:
+      count: 1
+      roles:
+        - master
+    data:
+      count: 1
+      roles:
+        - data
+    client:
+      count: 1
+      roles: []
+  superuser:
+    password: password
+  version: 8.10.1
+
+kibana:
+  count: 1
+
+beat:
+  filebeat:
+    log:
+      console: true
